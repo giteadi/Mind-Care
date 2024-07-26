@@ -92,7 +92,10 @@ export default function Home() {
           ))}
         </div>
       </div>
-
+    {/* Custom Card */}
+    <div>
+        <CustomCard/>
+    </div>
     </div>
   );
 }
