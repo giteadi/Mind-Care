@@ -1,20 +1,7 @@
-import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import vdo from '../assets/InShot_20240723_234557451.mp4';
-import CustomCard from '../component/CustumCard';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-const conditions = [
-  'anxiety',
-  'depression',
-  'social-anxiety',
-  'panic-disorder',
-  'bipolar-disorder',
-  'borderline-personality-disorder',
-  'postpartum',
-  'insuiavity',
-  'ocd',
-  'eating-disorder'
-];
+// Sample data for testing purposes
 const dataArray = [
   [
       { id:1 ,
@@ -242,84 +229,129 @@ const dataArray = [
     ]
     
 ];
-const Home = () => {
-  const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const navigate = useNavigate();
+const TestForm = () => {
+  const { id } = useParams(); // Extract the id from the URL
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [responses, setResponses] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [testData, setTestData] = useState(null);
 
-  const handlePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
+  useEffect(() => {
+    const fetchData = () => {
+      const testId = parseInt(id, 10); // Ensure ID is parsed as an integer
+      const data = dataArray.flat().find(test => test.id === testId); // Use flat() to handle array of arrays
+      setTestData(data);
+    };
+
+    fetchData();
+  }, [id]);
+
+  if (!testData) {
+    return <div className="flex items-center justify-center h-screen text-lg">Loading...</div>;
+  }
+
+  const { test, questions, options, scoring, interpretation } = testData;
+
+  const handleOptionChange = (option) => {
+    setResponses({
+      ...responses,
+      [currentQuestionIndex]: option,
+    });
+  };
+
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      setSubmitted(true);
     }
   };
 
-  const handleCardClick = (id) => {
-    console.log(id, "home");
-    navigate(`/test-form/${id}`);
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
+  const calculateScore = () => {
+    const score = Object.values(responses).reduce((acc, option) => {
+      if (option === 'Not at all') return acc;
+      if (option === 'Several days') return acc + 1;
+      if (option === 'More than half the days') return acc + 2;
+      if (option === 'Nearly every day') return acc + 3;
+      return acc;
+    }, 0);
+
+    if (score >= 0 && score <= 4) return scoring["0-4"];
+    if (score >= 5 && score <= 9) return scoring["5-9"];
+    if (score >= 10 && score <= 14) return scoring["10-14"];
+    return scoring["15-21"];
+  };
+
+  const getInterpretation = () => {
+    const score = Object.values(responses).reduce((acc, option) => {
+      if (option === 'Not at all') return acc;
+      if (option === 'Several days') return acc + 1;
+      if (option === 'More than half the days') return acc + 2;
+      if (option === 'Nearly every day') return acc + 3;
+      return acc;
+    }, 0);
+
+    if (score < 40) return interpretation["below 40%"];
+    if (score < 70) return interpretation["40-70"];
+    return interpretation["70 above"];
   };
 
   return (
-    <div className="relative max-w-full bg-white font-sans">
-      <div className="absolute inset-0">
-        <video
-          ref={videoRef}
-          src={vdo}
-          autoPlay
-          muted
-          loop
-          className="object-cover w-full h-[60vh] md:h-[70vh] lg:h-[80vh]"
-        />
-      </div>
-
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center text-white p-6 md:p-8 lg:p-12">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Welcome to Our Site</h1>
-        <p className="text-lg md:text-xl lg:text-2xl mb-8 leading-relaxed">
-          Discover mental health resources and support. Empower yourself with the tools and knowledge to improve your well-being.
-        </p>
-        <button
-          onClick={handlePlayPause}
-          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg shadow-lg transition duration-300"
-        >
-          {isPlaying ? 'Pause Video' : 'Play Video'}
-        </button>
-      </div>
-
-      <div className="relative z-10 px-4 py-8 md:px-8 md:py-12 bg-white text-black max-w-4xl mx-auto rounded-lg shadow-lg mt-12">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">Welcome to Mind Care</h2>
-        <p className="text-base md:text-lg leading-relaxed">
-          In today's fast-paced world, taking care of our mental well-being is more important than ever. Life can get overwhelming at times, and that's why it's crucial to prioritize our mental health just like we do with our physical health. Mental health is increasingly disturbed due to irregular schedules and stress, affecting many people today. Take some time from your busy schedule to improve your mental health by taking our mental health assessment test and checking your well-being.
-        </p>
-      </div>
-
-      <div className="relative z-10 px-4 py-8 md:px-8 md:py-12 bg-white text-black max-w-6xl mx-auto rounded-lg shadow-lg mt-12">
-        <h2 className="text-3xl md:text-4xl font-bold mb-8">Explore Mental Health Conditions</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {dataArray.flat().map((test) => (
-            
-            <div
-              key={test.id}
-              className="bg-white border border-blue-200 hover:bg-blue-100 text-black rounded-lg shadow-lg cursor-pointer transition-transform transform hover:scale-105"
-              onClick={() => handleCardClick(test.id)}
-            >
-              
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 capitalize">{test.test.replace('-', ' ')}</h3>
-                <p className="text-sm">
-                  Learn more about {test.test.replace('-', ' ')} and find resources and support to help manage it.
-                </p>
-              </div>
+    <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
+        <h1 className="text-3xl font-bold mb-6 text-center">{test}</h1>
+        {!submitted ? (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Question {currentQuestionIndex + 1}:</h2>
+              <p className="text-lg mb-4">{questions[currentQuestionIndex]}</p>
+              {options.map((option, index) => (
+                <div key={index} className="flex items-center mb-2">
+                  <input
+                    type="radio"
+                    id={`q${currentQuestionIndex}-opt${index}`}
+                    name={`question${currentQuestionIndex}`}
+                    value={option}
+                    checked={responses[currentQuestionIndex] === option}
+                    onChange={() => handleOptionChange(option)}
+                    className="form-radio h-4 w-4 text-blue-600"
+                  />
+                  <label htmlFor={`q${currentQuestionIndex}-opt${index}`} className="ml-2 text-lg">{option}</label>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            <div className="flex justify-between">
+              <button
+                onClick={handlePrevious}
+                disabled={currentQuestionIndex === 0}
+                className={`py-2 px-4 rounded-lg text-white ${currentQuestionIndex === 0 ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'} transition duration-300`}
+              >
+                Previous
+              </button>
+              <button
+                onClick={handleNext}
+                className="py-2 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition duration-300"
+              >
+                {currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next'}
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Results:</h2>
+            <p className="text-lg mb-2">Your score: <span className="font-bold">{calculateScore()}</span></p>
+            <p className="text-lg">Interpretation: {getInterpretation()}</p>
+          </div>
+        )}
       </div>
-      <CustomCard />
     </div>
   );
 };
 
-export default Home;
+export default TestForm;

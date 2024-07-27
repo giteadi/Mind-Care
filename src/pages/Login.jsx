@@ -1,12 +1,35 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../redux/authSlicer'; // Adjust the import based on your actual file path
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { loading, error } = useSelector((state) => state.auth);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle login logic
+
+        // Basic client-side validation
+        if (!email || !password) {
+            toast.error('All fields are required');
+            return;
+        }
+
+        // Dispatch login action
+        dispatch(loginUser({ email, password }))
+            .unwrap()
+            .then(() => {
+                toast.success('Login successful');
+                navigate('/'); // Redirect to homepage or desired page after login
+            })
+            .catch(() => {
+                // Error handling is done in the thunk
+            });
     };
 
     return (
@@ -39,9 +62,11 @@ export default function Login() {
                     <button
                         type="submit"
                         className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+                        disabled={loading}
                     >
-                        Login
+                        {loading ? 'Logging in...' : 'Login'}
                     </button>
+                    {error && <p className="mt-4 text-red-600 text-sm">{error}</p>}
                     <p className="mt-4 text-center text-gray-600 text-sm">
                         Don't have an account? <a href="/register" className="text-blue-500 hover:underline">Register</a>
                     </p>
