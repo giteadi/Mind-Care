@@ -319,7 +319,7 @@ const Home = () => {
         </div>
       </div>
       <CustomCard />
-      <div>
+      <div className="">
       <Faq/>
       </div>
     </div>
