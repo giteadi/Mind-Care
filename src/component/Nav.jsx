@@ -26,7 +26,7 @@ export default function Nav() {
           <Link to="/" className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition duration-300">
             Home
           </Link>
-          <Link to="/mental-health-issues" className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition duration-300">
+          <Link to="/issue" className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition duration-300">
             Mental Health Issues
           </Link>
           <Link to="/resources" className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition duration-300">

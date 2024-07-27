@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import vdo from '../assets/InShot_20240723_234557451.mp4';
 import CustomCard from '../component/CustumCard';
+import Faq from '../component/Faq';
 
 const conditions = [
   'anxiety',
@@ -318,6 +319,9 @@ const Home = () => {
         </div>
       </div>
       <CustomCard />
+      <div>
+      <Faq/>
+      </div>
     </div>
   );
 };

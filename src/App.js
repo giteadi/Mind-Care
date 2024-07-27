@@ -7,6 +7,8 @@ import Footer from "./pages/Footer";
 import Condition from "./pages/Condition";
 import TestForm from "./pages/TestForm";
 import ProtectedRoute from "./component/ProtectedRoute"; // Ensure the path is correct
+import Resource from "./pages/Resources";
+import MentalIssue from "./pages/MentalIssue";
 
 function App() {
   return (
@@ -22,8 +24,8 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/test-form/:id" element={<TestForm />} />
         </Route>
-
-        {/* Optionally handle 404 - Not Found */}
+        <Route path="/resources" element={<Resource/>}/>
+        <Route path="/issue" element={<MentalIssue/>}/>
         <Route path="*" element={<h1>404 Page not found</h1>} />
       </Routes>
       <Footer />
