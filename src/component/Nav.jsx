@@ -32,7 +32,7 @@ export default function Nav() {
           <Link to="/resources" className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition duration-300">
             Resources
           </Link>
-          <Link to="/about-us" className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition duration-300">
+          <Link to="/about" className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition duration-300">
             About Us
           </Link>
           {isAuthenticated ? (

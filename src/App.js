@@ -9,6 +9,7 @@ import TestForm from "./pages/TestForm";
 import ProtectedRoute from "./component/ProtectedRoute"; // Ensure the path is correct
 import Resource from "./pages/Resources";
 import MentalIssue from "./pages/MentalIssue";
+import AboutUs from "./pages/AboutUs";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/resources" element={<Resource/>}/>
         <Route path="/issue" element={<MentalIssue/>}/>
         <Route path="*" element={<h1>404 Page not found</h1>} />
+        <Route path="/about" element={<AboutUs/>}/>
       </Routes>
       <Footer />
     </div>
