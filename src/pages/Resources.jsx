@@ -35,18 +35,18 @@ const DoctorCard = ({ name, image, link }) => (
   // Main Resource Component
   const Resource = () => {
     const doctors = [
-      { name: 'Dr. Gourav Gupta', image: doctor1, link: 'https://example.com/doctor1' },
-      { name: 'Dinika Anand', image: doctor2, link: 'https://example.com/doctor2' },
-      { name: 'Vishal Chhabra', image: doctor3, link: 'https://example.com/doctor3' },
-      { name: 'Dinesh Ahmad', image: doctor4, link: 'https://example.com/doctor4' },
-      { name: 'Mrugesh Vaishnav', image: doctor5, link: 'https://example.com/doctor5' },
-      { name: 'Komal Manshani', image: doctor6, link: 'https://example.com/doctor6' },
-      { name: 'Vasantha Jayaraman', image: doctor7, link: 'https://example.com/doctor7' },
+      { name: 'Dr. Gourav Gupta', image: doctor1, link: 'https://g.co/kgs/hNZcmpb' },
+      { name: 'Dinika Anand', image: doctor2, link: 'https://www.blkmaxhospital.com/doctor/dinika-anand' },
+      { name: 'Vishal Chhabra', image: doctor3, link: 'https://www.practo.com/delhi/doctor/dr-vishal-chhabra-psychiatrist ' },
+      { name: 'Dinesh Ahmad', image: doctor4, link: 'https://www.maxhealthcare.in/doctor/dr-danish-ahmed ' },
+      { name: 'Mrugesh Vaishnav', image: doctor5, link: 'https://drmrugeshvaishnav.com/ ' },
+      { name: 'Komal Manshani', image: doctor6, link: 'https://www.maxhealthcare.in/doctor/dr-komal-manshani ' },
+      { name: 'Vasantha Jayaraman', image: doctor7, link: 'https://www.practo.com/gurgaon/doctor/dr-vipul-rastogi-psychiatrist ' },
       { name: 'Vipul Rastogi', image: doctor8, link: 'https://example.com/doctor8' },
-      { name: 'Sameer Malhotra', image: doctor9, link: 'https://example.com/doctor9' },
-      { name: 'Prerna Khana', image: doctor10, link: 'https://example.com/doctor10' },
-      { name: 'Rajkumar Shrivastava', image: doctor11, link: 'https://example.com/doctor11' },
-      { name: 'Anandi Lal', image: doctor12, link: 'https://example.com/doctor12' },
+      { name: 'Sameer Malhotra', image: doctor9, link: 'https://www.maxhealthcare.in/doctor/dr-sameer-malhotra ' },
+      { name: 'Prerna Khana', image: doctor10, link: 'https://www.maxhealthcare.in/doctor/dr-prerna-khanna ' },
+      { name: 'Rajkumar Shrivastava', image: doctor11, link: 'https://www.maxhealthcare.in/doctor/dr-raj-kumar-srivastava ' },
+      { name: 'Anandi Lal', image: doctor12, link: 'https://www.maxhealthcare.in/doctor/dr-anandi-lal ' },
     ];
   
     return (
