@@ -1,7 +1,7 @@
 // MentalIssue.js
 
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const conditions = [
   {
     name: 'Anxiety',
@@ -65,28 +65,42 @@ const conditions = [
   }
 ];
 
-const MentalIssue = () => (
-  <div className="mental-issue-container max-w-4xl mx-auto px-4 py-8">
-    <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">Mental Health Issues</h1>
-    {conditions.map((condition, index) => (
-      <section key={index} className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">{condition.name}</h2>
-        <p className="text-gray-600 mb-4">{condition.description}</p>
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">Symptoms:</h3>
-        <ul className="list-disc list-inside mb-4">
-          {condition.symptoms.map((symptom, idx) => (
-            <li key={idx} className="text-gray-600">{symptom}</li>
-          ))}
-        </ul>
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">Cures:</h3>
-        <ul className="list-disc list-inside">
-          {condition.cures.map((cure, idx) => (
-            <li key={idx} className="text-gray-600">{cure}</li>
-          ))}
-        </ul>
-      </section>
-    ))}
-  </div>
-);
+const MentalIssue = () => {
+  const navigate = useNavigate();
+
+  const handleButtonClick = (conditionName) => {
+    navigate(`/issue/${conditionName.toLowerCase().replace(' ', '-')}`);
+  };
+
+  return (
+    <div className="mental-issue-container max-w-4xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">Mental Health Issues</h1>
+      {conditions.map((condition, index) => (
+        <section key={index} className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">{condition.name}</h2>
+          <p className="text-gray-600 mb-4">{condition.description}</p>
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">Symptoms:</h3>
+          <ul className="list-disc list-inside mb-4">
+            {condition.symptoms.map((symptom, idx) => (
+              <li key={idx} className="text-gray-600">{symptom}</li>
+            ))}
+          </ul>
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">Cures:</h3>
+          <ul className="list-disc list-inside mb-4">
+            {condition.cures.map((cure, idx) => (
+              <li key={idx} className="text-gray-600">{cure}</li>
+            ))}
+          </ul>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+            onClick={() => handleButtonClick(condition.name)}
+          >
+            Learn More
+          </button>
+        </section>
+      ))}
+    </div>
+  );
+};
 
 export default MentalIssue;
