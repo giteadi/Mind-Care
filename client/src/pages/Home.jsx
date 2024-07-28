@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-const CustomCard = () => {
-  const dataArray = [
+import vdo from '../assets/InShot_20240723_234557451.mp4';
+import CustomCard from '../component/CustumCard';
+import Faq from '../component/Faq';
+
+const conditions = [
+  'anxiety',
+  'depression',
+  'social-anxiety',
+  'panic-disorder',
+  'bipolar-disorder',
+  'borderline-personality-disorder',
+  'postpartum',
+  'insuiavity',
+  'ocd',
+  'eating-disorder'
+];
+const dataArray = [
   [
       { id:1 ,
         "test": "ANXIETY TEST",
@@ -228,30 +243,87 @@ const CustomCard = () => {
     ]
     
 ];
-  const nav=useNavigate();
+const Home = () => {
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const navigate = useNavigate();
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   const handleCardClick = (id) => {
     console.log(id, "home");
-    nav(`/test-form/1`);
+    navigate(`/test-form/${id}`);
   };
+
   return (
-    <div className="flex justify-center items-center py-12 bg-gray-100 ">
-      <div className="relative bg-white border border-gray-300 rounded-lg shadow-lg w-11/12 md:w-full lg:w-6/12 p-8">
-        <div className="flex flex-col justify-center items-center">
-          <h1 className="text-2xl font-bold mb-4">MIND CARE</h1>
-          <p className="text-center text-lg mb-2">
-             WE AWARE ABOUT YOUR MENTAL HEALTH
-          </p>
-          <p className="text-center text-lg mb-6">TAKE YOUR FIRST TEST</p>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded"
-          onClick={handleCardClick}>
-            BUTTON
-          </button>
+    <div className="relative max-w-full bg-white font-sans">
+      <div className="absolute inset-0">
+        <video
+          ref={videoRef}
+          src={vdo}
+          autoPlay
+          muted
+          loop
+          className="object-cover w-full h-[60vh] md:h-[70vh] lg:h-[80vh]"
+        />
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center text-white p-6 md:p-8 lg:p-12">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Welcome to Our Site</h1>
+        <p className="text-lg md:text-xl lg:text-2xl mb-8 leading-relaxed">
+          Discover mental health resources and support. Empower yourself with the tools and knowledge to improve your well-being.
+        </p>
+        <button
+          onClick={handlePlayPause}
+          className="bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded-lg shadow-lg transition duration-300"
+        >
+          {isPlaying ? 'Pause Video' : 'Play Video'}
+        </button>
+      </div>
+
+      <div className="relative z-10 px-4 py-8 md:px-8 md:py-12 bg-white text-black max-w-4xl mx-auto rounded-lg shadow-lg mt-12">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-green-600 text-center">Welcome to Mind Care</h2>
+        <p className="text-base md:text-lg leading-relaxed ">
+          In today's fast-paced world, taking care of our mental well-being is more important than ever. Life can get overwhelming at times, and that's why it's crucial to prioritize our mental health just like we do with our physical health. Mental health is increasingly disturbed due to irregular schedules and stress, affecting many people today. Take some time from your busy schedule to improve your mental health by taking our mental health assessment test and checking your well-being.
+        </p>
+      </div>
+
+      <div className="relative z-10 px-4 py-8 md:px-8 md:py-12 bg-white text-black max-w-6xl mx-auto rounded-lg shadow-lg mt-12">
+        <h2 className="text-3xl md:text-4xl font-bold mb-8">Explore Mental Health Conditions</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {dataArray.flat().map((test) => (
+            
+            <div
+              key={test.id}
+              className="bg-white border border-blue-200 hover:bg-green-100 text-black rounded-lg shadow-lg cursor-pointer transition-transform transform hover:scale-105"
+              onClick={() => handleCardClick(test.id)}
+            >
+              
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2 capitalize">{test.test.replace('-', ' ')}</h3>
+                <p className="text-sm">
+                  Learn more about {test.test.replace('-', ' ')} and find resources and support to help manage it.
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="absolute top-0 right-0 h-full w-1/4 bg-blue-300 rounded-tl-full rounded-bl-full"></div>
+      </div>
+      <CustomCard />
+      <div className="">
+      <Faq/>
       </div>
     </div>
   );
 };
 
-export default CustomCard;
+export default Home;
