@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams ,Link} from 'react-router-dom';
 
 // Sample data for testing purposes
 const dataArray = [
@@ -275,10 +275,10 @@ const TestForm = () => {
 
   const calculateScore = () => {
     const score = Object.values(responses).reduce((acc, option) => {
-      if (option === 'Not at all') return acc;
-      if (option === 'Several days') return acc + 1;
-      if (option === 'More than half the days') return acc + 2;
-      if (option === 'Nearly every day') return acc + 3;
+      if (option === 'Not at all' || option === 'Never') return acc;
+      if (option === 'Several days' || option === 'Rarely' || option === 'Sometimes') return acc + 1;
+      if (option === 'More than half the days' || option === 'Frequently' || option === 'Often') return acc + 2;
+      if (option === 'Nearly every day' || option === 'Always') return acc + 3;
       return acc;
     }, 0);
 
@@ -290,10 +290,10 @@ const TestForm = () => {
 
   const getInterpretation = () => {
     const score = Object.values(responses).reduce((acc, option) => {
-      if (option === 'Not at all') return acc;
-      if (option === 'Several days') return acc + 1;
-      if (option === 'More than half the days') return acc + 2;
-      if (option === 'Nearly every day') return acc + 3;
+      if (option === 'Not at all' || option === 'Never') return acc;
+      if (option === 'Several days' || option === 'Rarely' || option === 'Sometimes') return acc + 1;
+      if (option === 'More than half the days' || option === 'Frequently' || option === 'Often') return acc + 2;
+      if (option === 'Nearly every day' || option === 'Always') return acc + 3;
       return acc;
     }, 0);
 
@@ -344,9 +344,18 @@ const TestForm = () => {
           </div>
         ) : (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Results:</h2>
-            <p className="text-lg mb-2">Your score: <span className="font-bold">{calculateScore()}</span></p>
-            <p className="text-lg">Interpretation: {getInterpretation()}</p>
+            <h2 className="text-2xl font-semibold mb-4">Test Result:</h2>
+            <p className="text-lg mb-6">{calculateScore()}</p>
+            <p className="text-lg mb-6">{getInterpretation()}</p>
+            <div className="bg-blue-100 p-4 rounded-lg shadow-lg mb-6">
+              <h3 className="text-xl font-semibold mb-2">Need Resources?</h3>
+              <p className="text-lg mb-4">Check out our resources to help improve your mental health.</p>
+              <Link to="/resources">
+                <button className="py-2 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition duration-300">
+                  Go to Resources
+                </button>
+              </Link>
+            </div>
           </div>
         )}
       </div>

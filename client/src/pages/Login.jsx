@@ -35,7 +35,7 @@ export default function Login() {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
             <div className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
-                <h2 className="text-2xl font-bold text-blue-500 mb-6">Login</h2>
+                <h2 className="text-2xl font-bold text-green-500 mb-6">Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="email">Email</label>
@@ -61,14 +61,14 @@ export default function Login() {
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+                        className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
                         disabled={loading}
                     >
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
                     {error && <p className="mt-4 text-red-600 text-sm">{error}</p>}
                     <p className="mt-4 text-center text-gray-600 text-sm">
-                        Don't have an account? <a href="/register" className="text-blue-500 hover:underline">Register</a>
+                        Don't have an account? <a href="/register" className="text-green-500 hover:underline">Register</a>
                     </p>
                 </form>
             </div>

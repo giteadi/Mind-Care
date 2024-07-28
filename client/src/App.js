@@ -21,7 +21,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/:condition" element={<Condition />} />
-        <Route path="/test-form/:id" element={<ProtectedRoute component={TestForm} />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/test-form/:id" element={<TestForm />} />
+        </Route>
         <Route path="/resources" element={<Resource />} />
         <Route path="/issue" element={<MentalIssue />} />
         <Route path="/singlePage" element={<SinglePage />} />
